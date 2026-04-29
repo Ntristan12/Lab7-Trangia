@@ -1,0 +1,35 @@
+{
+"$schema":"./node_modules/@angular/cli/lib/config/schema.json",
+"version": 1,
+"newProjectRoot": "projects",
+"projects": {
+"angular-15-example": {
+"projectType": "application",
+"schematics": {
+"@schematics/angular:component": {
+"style": "less"
+}
+},
+"root": "",
+"sourceRoot": "src",
+"prefix": "app",
+"architect": {
+"build": {
+"builder": "@angular-devkit/build-angular:browser",
+"options": {
+"outputPath": "dist/angular-15-example",
+"index": "src/index.html",
+"main": "src/main.ts",
+"polyfills": "src/polyfills.ts",
+"tsConfig": "tsconfig.app.json",
+"inlineStyleLanguage": "less",
+"assets": [
+"src/favicon.ico",
+"src/assets"
+1,
+"styles": [
+"src/styles.less"
+1,
+
+
+
