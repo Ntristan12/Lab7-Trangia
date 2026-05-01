@@ -27,14 +27,14 @@ export class AlertComponent implements OnInit, OnDestroy {
     ngOnInit() {
         // subscribe to new alert notifications
         this.alertSubscription = this.alertService.onAlert(this.id)
-        .subscribe (alert => {
-            // clear alerts when an empty alert is received
-        if (!alert.message) {
-            this.alerts = this.alerts.filter(x => x.keepAfterRouteChange);
-            this.alerts.forEach(x => delete x.keepAfterRouteChange);
-            this.scheduleDetectChanges();
-        return;
-        }
+            .subscribe (alert => {
+                // clear alerts when an empty alert is received
+            if (!alert.message) {
+                this.alerts = this.alerts.filter(x => x.keepAfterRouteChange);
+                this.alerts.forEach(x => delete x.keepAfterRouteChange);
+                this.scheduleDetectChanges();
+                return;
+            }
 
 
         this.alerts.push(alert);
@@ -42,18 +42,20 @@ export class AlertComponent implements OnInit, OnDestroy {
         
         if (alert.autoClose) {
             setTimeout(() => this.removeAlert(alert), 3000);
+        }
         });
 
 
     // clear alerts on location change
-    this.routeSubscription = this.router.events.subscribe (event {
+    this.routeSubscription = this.router.events.subscribe(event => {
         if (event instanceof NavigationStart) {
             this.alertService.clear(this.id);
             this.scheduleDetectChanges();
         }
     });
 }
-ngOnDestroy() { 
+
+ngOnDestroy() {
     // unsubscribe to avoid memory leaks
     this.alertSubscription.unsubscribe();
     this.routeSubscription.unsubscribe();
@@ -78,7 +80,7 @@ removeAlert(alert: Alert) {
 }
 
 cssClasses (alert: Alert) {
-    if (lalert) return;
+    if (!alert) return;
 
     const classes = ['alert', 'alert-dismissible', 'mt-4', 'container'];
     
@@ -88,6 +90,7 @@ cssClasses (alert: Alert) {
         [AlertType.Info]: 'alert-info',
         [AlertType.Warning]: 'alert-warning'
     }
+
     if (alert.type !== undefined) {
         classes.push(alertTypeClass[alert.type]);
     }
